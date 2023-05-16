@@ -27,7 +27,7 @@ class MainApp(App):
         mic = get_input(callback=mic_callback)
         mic.start()
         sample.play()
-        sleep(3)  #record for 3 seconds
+        time.sleep(3)  #record for 3 seconds
         mic.stop()
         sample.stop()        
         
@@ -39,8 +39,9 @@ class MainApp(App):
         
     #define what happens on mic input with arg as buffer
     def mic_callback(buf):
-        '''
-        print 'got', len(buf)
+        
+        #print 'got', len(buf)
+        print("here")
         #HERE: How do I manipulate buf?
         #modified_buf = function(buf)
         #sample.write(modified_buf)
@@ -61,7 +62,7 @@ class MainApp(App):
 
         # convert back the array to a byte buffer for speaker
         sample.write(values.tostring())       
-        
+        '''
         
         
               
