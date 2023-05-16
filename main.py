@@ -5,11 +5,64 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy_garden.graph import Graph, LinePlot
 import numpy as np
 
+from time import sleep
+from audiostream import get_input
+from audiostream import get_output, AudioSample
+
+from array import array
+
 
 class MainApp(App):
 
     def build(self):
+        #get speakers, create sample and bind to speakers
+        stream = get_output(channels=2, rate=22050, buffersize=1024)
+        sample = AudioSample()
+        stream.add_sample(sample)
+        
+        
+        # get the default audio input (mic on most cases)
+        mic = get_input(callback=mic_callback)
+        mic.start()
+        sample.play()
+        sleep(3)  #record for 3 seconds
+        mic.stop()
+        sample.stop()        
+        
+        
+        
         return MainGrid()
+        
+        
+        
+    #define what happens on mic input with arg as buffer
+    def mic_callback(buf):
+        '''
+        print 'got', len(buf)
+        #HERE: How do I manipulate buf?
+        #modified_buf = function(buf)
+        #sample.write(modified_buf)
+        sample.write(buf)  
+        '''
+        # convert our byte buffer into signed short array
+        values = array("h", buf)
+
+        # get right values only
+        r_values = values[1::2]
+
+        # reduce by 20%
+        r_values = map(lambda x: x * 0.8, r_values)
+
+        # you can assign only array for slice, not list
+        # so we need to convert back list to array
+        values[1::2] = array("h", r_values)
+
+        # convert back the array to a byte buffer for speaker
+        sample.write(values.tostring())       
+        
+        
+        
+              
 
 
 class MainGrid(BoxLayout):
