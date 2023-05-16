@@ -15,6 +15,12 @@ from array import array
 
 class MainApp(App):
 
+        
+
+        
+        
+
+
     def build(self):
         request_permissions([Permission.INTERNET, Permission.RECORD_AUDIO])
         #get speakers, create sample and bind to speakers
@@ -24,7 +30,7 @@ class MainApp(App):
         
         
         # get the default audio input (mic on most cases)
-        mic = get_input(callback=mic_callback)
+        mic = get_input(callback=self.mic_callback)
         mic.start()
         sample.play()
         time.sleep(3)  #record for 3 seconds
@@ -34,7 +40,6 @@ class MainApp(App):
         
         
         return MainGrid()
-        
         
         
     #define what happens on mic input with arg as buffer
@@ -63,8 +68,6 @@ class MainApp(App):
         # convert back the array to a byte buffer for speaker
         sample.write(values.tostring())       
         '''
-        
-        
               
 
 
