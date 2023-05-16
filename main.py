@@ -5,7 +5,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy_garden.graph import Graph, LinePlot
 import numpy as np
 
-from time import sleep
+import time
 from audiostream import get_input
 from audiostream import get_output, AudioSample
 from android.permissions import request_permissions,Permission,check_permission
