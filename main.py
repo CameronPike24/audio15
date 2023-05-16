@@ -8,6 +8,7 @@ import numpy as np
 from time import sleep
 from audiostream import get_input
 from audiostream import get_output, AudioSample
+from android.permissions import request_permissions,Permission,check_permission
 
 from array import array
 
@@ -15,6 +16,7 @@ from array import array
 class MainApp(App):
 
     def build(self):
+        request_permissions([Permission.INTERNET, Permission.RECORD_AUDIO])
         #get speakers, create sample and bind to speakers
         stream = get_output(channels=2, rate=22050, buffersize=1024)
         sample = AudioSample()
